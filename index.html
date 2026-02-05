@@ -30,6 +30,15 @@
                     },
                     backgroundImage: {
                         'hero-pattern': "url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1920&auto=format&fit=crop')", 
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
                     }
                 }
             }
@@ -40,16 +49,12 @@
         /* Base font is Cairo (Arabic) */
         body { font-family: 'Cairo', sans-serif; }
         
-        /* Force Cairo on Headings to prevent Playfair Display (Latin only) from breaking Arabic look */
+        /* Force Cairo on Headings */
         h1, h2, h3, h4, h5, h6 { font-family: 'Cairo', sans-serif; }
         
-        /* Only use Serif for Latin text or Logo */
+        /* Specific fonts */
         .font-logo { font-family: 'Cinzel', serif; }
         .font-latin-serif { font-family: 'Playfair Display', serif; }
-        
-        /* Transitions */
-        .fade-enter { opacity: 0; transform: translateY(10px); }
-        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease, transform 0.5s ease; }
         
         /* Direction */
         .rtl { direction: rtl; }
@@ -145,7 +150,7 @@
         <!-- Main Content -->
         <main id="main-content" class="flex-grow">
             
-            <div id="home-view" class="fade-enter-active">
+            <div id="home-view" class="animate-fade-in">
                 
                 <!-- Hero Section -->
                 <section class="relative h-[90vh] flex flex-col items-center justify-center text-center px-4 bg-hero-pattern bg-cover bg-fixed bg-center">
@@ -401,7 +406,7 @@
             </div>
 
             <!-- Contact View -->
-            <div id="contact-view" class="hidden fade-enter">
+            <div id="contact-view" class="hidden animate-fade-in">
                 <section class="pt-32 pb-24 px-6 max-w-7xl mx-auto min-h-[80vh]">
                     <div class="grid md:grid-cols-2 gap-16">
                         <div class="text-right rtl:text-right ltr:text-left">
@@ -417,7 +422,7 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-xs uppercase tracking-wider text-brand-gold mb-2">Email</h4>
-                                    <p class="text-brand-dark font-serif text-2xl">booking@home.ae</p>
+                                    <p class="text-brand-dark font-serif text-2xl">contact@homes.com</p>
                                 </div>
                             </div>
                         </div>
@@ -696,8 +701,18 @@
         }
 
         function setView(v) {
-            document.getElementById('home-view').classList.toggle('hidden', v !== 'home');
-            document.getElementById('contact-view').classList.toggle('hidden', v !== 'contact');
+            const views = ['home-view', 'contact-view'];
+            views.forEach(id => {
+                const el = document.getElementById(id);
+                if (id === v + '-view') {
+                    el.classList.remove('hidden');
+                    // Force reflow for animation if needed or ensure class is present
+                    el.classList.add('animate-fade-in'); 
+                } else {
+                    el.classList.add('hidden');
+                    el.classList.remove('animate-fade-in');
+                }
+            });
             window.scrollTo(0, 0);
         }
 
