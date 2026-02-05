@@ -1,208 +1,519 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI SaaS - Next-Gen CRM & Automation</title>
+    <title>HOME | Luxury Rentals & Property Management</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Fonts: Cinzel (Logo), Cairo (Arabic), Playfair Display (Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Cinzel:wght@700;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-gold': '#D4AF37',      /* Or riche */
+                        'brand-dark': '#0F172A',      /* Bleu Nuit Profond */
+                        'brand-cream': '#F9F8F6',     /* Fond papier luxe */
+                        'brand-stone': '#64748B',     /* Gris Pierre */
+                        'brand-sand': '#E5E0D8',      /* Sable */
+                    },
+                    fontFamily: {
+                        logo: ['"Cinzel"', 'serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Cairo"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1920&auto=format&fit=crop')", 
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        /* Base font is Cairo (Arabic) */
+        body { font-family: 'Cairo', sans-serif; }
+        
+        /* Force Cairo on Headings to prevent Playfair Display (Latin only) from breaking Arabic look */
+        h1, h2, h3, h4, h5, h6 { font-family: 'Cairo', sans-serif; }
+        
+        /* Only use Serif for Latin text or Logo */
+        .font-logo { font-family: 'Cinzel', serif; }
+        .font-latin-serif { font-family: 'Playfair Display', serif; }
+        
+        /* Transitions */
+        .fade-enter { opacity: 0; transform: translateY(10px); }
+        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease, transform 0.5s ease; }
+        
+        /* Direction */
         .rtl { direction: rtl; }
         .ltr { direction: ltr; }
-        [v-cloak] { display: none; }
-        .transition-all { transition: all 0.3s ease; }
+        
+        /* Nav Hover */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 1px; bottom: -4px; left: 0;
+            background-color: #D4AF37; transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Search Bar Glass Effect */
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0F172A; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-white text-slate-900">
-    <div id="app" class="min-h-screen transition-all">
-        <!-- Navigation -->
-        <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-sm border-b border-slate-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between h-20">
-                    <!-- Logo -->
-                    <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="setView('home')">
-                        <div class="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+<body class="bg-brand-cream text-brand-dark overflow-x-hidden">
+
+    <div id="app" class="min-h-screen flex flex-col justify-between">
+        
+        <!-- Navbar -->
+        <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-brand-dark/95 backdrop-blur-md border-b border-white/10 text-white">
+            <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+                <div class="flex items-center justify-between h-24">
+                    
+                    <!-- Logo BRAND -->
+                    <div class="flex-shrink-0 cursor-pointer flex items-center gap-3" onclick="setView('home')">
+                        <div class="flex items-center justify-center w-12 h-12 border border-brand-gold text-brand-gold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
                         </div>
-                        <span class="font-bold text-xl tracking-tight text-slate-900">AISaaS</span>
+                        <div class="flex flex-col justify-center text-center">
+                            <span class="font-logo text-3xl font-black tracking-[0.15em] text-white leading-none">HOMES</span>
+                            <span class="text-[0.5rem] uppercase tracking-[0.6em] text-brand-gold mt-1 leading-none mr-[-0.6em]">Luxury Rentals</span>
+                        </div>
                     </div>
 
-                    <!-- Desktop Menu -->
-                    <div class="hidden md:flex items-center gap-8">
-                        <button onclick="setView('home')" id="nav-home" class="text-slate-900 font-medium text-sm transition-colors">الرئيسية</button>
-                        <a href="#features" id="nav-features" class="text-slate-500 hover:text-slate-900 transition-colors font-medium text-sm">التقنيات</a>
-                        <a href="#services" id="nav-services" class="text-slate-500 hover:text-slate-900 transition-colors font-medium text-sm">الخدمات</a>
-                        <button onclick="setView('contact')" id="nav-contact" class="text-slate-500 hover:text-slate-900 transition-colors font-medium text-sm">تواصل معنا</button>
+                    <!-- Desktop Links -->
+                    <div class="hidden lg:flex items-center gap-8 xl:gap-12">
+                        <button onclick="setView('home')" id="nav-home" class="nav-link text-sm uppercase tracking-widest font-light hover:text-brand-gold transition-colors">الرئيسية</button>
+                        <a href="#rentals" id="nav-portfolio" class="nav-link text-sm uppercase tracking-widest font-light hover:text-brand-gold transition-colors">إقامات قصيرة</a>
+                        <a href="#longterm" id="nav-longterm" class="nav-link text-sm uppercase tracking-widest font-light hover:text-brand-gold transition-colors">إقامات طويلة</a>
+                        <a href="#gallery" id="nav-gallery" class="nav-link text-sm uppercase tracking-widest font-light hover:text-brand-gold transition-colors">المجتمع</a>
+                        <a href="#services" id="nav-services" class="nav-link text-sm uppercase tracking-widest font-light hover:text-brand-gold transition-colors">الخدمات</a>
+                        <a href="#owners" id="nav-owners" class="nav-link text-sm uppercase tracking-widest font-light hover:text-brand-gold transition-colors text-brand-gold">للمُلاك</a>
+                        <button onclick="setView('contact')" id="nav-contact" class="nav-link text-sm uppercase tracking-widest font-light hover:text-brand-gold transition-colors">تواصل معنا</button>
                         
                         <!-- Language Switcher -->
-                        <div class="flex items-center border border-slate-200 rounded-full px-1 p-1">
-                            <button onclick="setLang('en')" class="lang-btn en px-3 py-1 rounded-full text-xs font-bold uppercase transition-all text-slate-400">EN</button>
-                            <button onclick="setLang('ar')" class="lang-btn ar px-3 py-1 rounded-full text-xs font-bold uppercase transition-all bg-slate-900 text-white">AR</button>
-                            <button onclick="setLang('fr')" class="lang-btn fr px-3 py-1 rounded-full text-xs font-bold uppercase transition-all text-slate-400">FR</button>
+                        <div class="flex items-center border border-white/20 px-3 py-1 gap-3 bg-black/20">
+                            <button onclick="setLang('en')" class="lang-btn en text-[11px] font-bold uppercase transition-all text-brand-stone hover:text-white">EN</button>
+                            <span class="text-white/20">|</span>
+                            <button onclick="setLang('ar')" class="lang-btn ar text-[11px] font-bold uppercase transition-all text-brand-gold">AR</button>
+                            <span class="text-white/20">|</span>
+                            <button onclick="setLang('fr')" class="lang-btn fr text-[11px] font-bold uppercase transition-all text-brand-stone hover:text-white">FR</button>
                         </div>
 
-                        <button class="bg-slate-900 text-white px-5 py-2 rounded-full font-medium text-sm hover:bg-slate-800 transition-all" id="nav-cta">
-                            ابدأ الآن
+                        <button onclick="setView('contact')" class="bg-brand-gold text-brand-dark px-6 py-3 font-latin-serif italic font-bold hover:bg-white transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.3)]" id="nav-cta">
+                            Book Now
                         </button>
                     </div>
 
-                    <!-- Mobile Toggle -->
-                    <div class="md:hidden flex items-center gap-4">
-                        <button onclick="toggleMenu()" class="text-slate-600 p-2">
-                            <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    <!-- Mobile Menu Toggle -->
+                    <div class="lg:hidden">
+                        <button onclick="toggleMenu()" class="text-white p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                         </button>
                     </div>
                 </div>
             </div>
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 shadow-lg px-4 py-6 space-y-4">
-                <button onclick="setView('home'); toggleMenu();" class="block text-slate-600 font-medium w-full text-right" id="m-nav-home">الرئيسية</button>
-                <a href="#features" class="block text-slate-600 font-medium" onclick="toggleMenu()" id="m-nav-features">التقنيات</a>
-                <a href="#services" class="block text-slate-600 font-medium" onclick="toggleMenu()" id="m-nav-services">الخدمات</a>
-                <button onclick="setView('contact'); toggleMenu();" class="block text-slate-600 font-medium w-full text-right" id="m-nav-contact">تواصل معنا</button>
+            
+            <!-- Mobile Dropdown -->
+            <div id="mobile-menu" class="hidden absolute top-24 left-0 w-full bg-brand-dark border-t border-white/10 p-8 flex flex-col gap-6 text-center h-screen">
+                <button onclick="setView('home'); toggleMenu();" class="text-white text-xl font-bold" id="m-nav-home">الرئيسية</button>
+                <a href="#rentals" onclick="toggleMenu()" class="text-white text-xl font-bold" id="m-nav-portfolio">إقامات فاخرة</a>
+                <a href="#longterm" onclick="toggleMenu()" class="text-white text-xl font-bold" id="m-nav-long">إقامات طويلة</a>
+                <a href="#gallery" onclick="toggleMenu()" class="text-white text-xl font-bold" id="m-nav-gallery">المجتمع</a>
+                <a href="#services" onclick="toggleMenu()" class="text-white text-xl font-bold" id="m-nav-services">الخدمات</a>
+                <a href="#owners" onclick="toggleMenu()" class="text-brand-gold text-xl font-bold" id="m-nav-owners">للمُلاك</a>
+                <button onclick="setView('contact'); toggleMenu();" class="text-white text-xl font-bold" id="m-nav-contact">تواصل معنا</button>
+                <div class="flex justify-center gap-6 mt-4">
+                    <button onclick="setLang('fr')" class="text-white/70">FR</button>
+                    <button onclick="setLang('ar')" class="text-brand-gold">AR</button>
+                    <button onclick="setLang('en')" class="text-white/70">EN</button>
+                </div>
             </div>
         </nav>
 
         <!-- Main Content -->
-        <main id="main-content">
-            <!-- Home View -->
-            <div id="home-view">
+        <main id="main-content" class="flex-grow">
+            
+            <div id="home-view" class="fade-enter-active">
+                
                 <!-- Hero Section -->
-                <section class="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-                    <div class="text-center max-w-4xl mx-auto">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold mb-8 uppercase tracking-wide" id="hero-badge">
-                            قوة المصادر المفتوحة
-                        </div>
-                        <h1 class="text-4xl md:text-6xl font-bold text-slate-900 leading-[1.1] mb-8 tracking-tight" id="hero-title">
-                            الجيل القادم من أنظمة إدارة العملاء والأتمتة
-                        </h1>
-                        <p class="text-lg md:text-xl text-slate-500 mb-10 leading-relaxed max-w-2xl mx-auto font-light" id="hero-subtitle">
-                            نظام بيئي متكامل يجمع بين Chatwoot و n8n و Typebot و واتساب. امتلك بياناتك وأتمت محادثاتك.
+                <section class="relative h-[90vh] flex flex-col items-center justify-center text-center px-4 bg-hero-pattern bg-cover bg-fixed bg-center">
+                    <!-- Overlay sombre -->
+                    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-brand-dark"></div>
+                    
+                    <div class="relative z-10 max-w-5xl mx-auto mt-10 w-full">
+                        <p class="text-brand-gold uppercase tracking-[0.3em] text-xs md:text-sm mb-6 font-bold" id="hero-subtitle">
+                            إدارة الممتلكات والإيجارات الفاخرة
                         </p>
-                        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <button class="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white rounded-full font-medium hover:bg-slate-800 transition-all" id="hero-cta-primary">عرض الخطط</button>
-                            <button onclick="setView('contact')" class="w-full sm:w-auto px-8 py-4 bg-white text-slate-600 border border-slate-200 rounded-full font-medium hover:border-slate-400 transition-all" id="hero-cta-secondary">المزيد من المعلومات</button>
-                        </div>
-                    </div>
+                        <h1 class="text-5xl md:text-7xl lg:text-8xl text-white font-black leading-tight mb-8 drop-shadow-2xl font-sans" id="hero-title">
+                            عِش الرفاهية<br>بكل تفاصيلها
+                        </h1>
+                        <p class="text-white/90 text-lg md:text-xl font-light max-w-2xl mx-auto mb-16 leading-relaxed" id="hero-desc">
+                            فيلات خاصة، بنتهاوس، وشقق فندقية في أرقى المجمعات السكنية.
+                        </p>
 
-                    <div class="mt-20 border-t border-slate-100 pt-16 grid grid-cols-2 md:grid-cols-4 gap-12 text-center opacity-80">
-                        <div class="flex flex-col items-center gap-4">
-                            <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-700"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></div>
-                            <span class="font-medium text-slate-500 text-xs uppercase">Chatwoot</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-4">
-                            <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-700"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 14a8 8 0 0 1-8 8"/><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V9a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v1"/><path d="M10 9.5V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v10"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-2 5.27"/><path d="M10 15h0"/><path d="M2 10h0"/></svg></div>
-                            <span class="font-medium text-slate-500 text-xs uppercase">n8n</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-4">
-                            <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-700"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/></svg></div>
-                            <span class="font-medium text-slate-500 text-xs uppercase">Typebot</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-4">
-                            <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-700"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div>
-                            <span class="font-medium text-slate-500 text-xs uppercase text-nowrap">Evolution API</span>
+                        <!-- Search Bar -->
+                        <div class="glass-panel p-4 md:p-6 rounded-sm shadow-2xl max-w-4xl mx-auto flex flex-col md:flex-row gap-4 items-end">
+                            <div class="w-full text-right rtl:text-right ltr:text-left">
+                                <label class="block text-brand-dark text-[10px] uppercase font-bold tracking-wider mb-2" id="lbl-dest">الوجهة</label>
+                                <select class="w-full bg-transparent border-b border-brand-dark/20 pb-2 font-sans font-bold text-lg text-brand-dark outline-none cursor-pointer">
+                                    <option id="opt-riyadh">الرياض، السعودية</option>
+                                    <option id="opt-cairo">القاهرة الجديدة، مصر</option>
+                                    <option id="opt-dubai">نخلة جميرا، دبي</option>
+                                </select>
+                            </div>
+                            <div class="w-full text-right rtl:text-right ltr:text-left">
+                                <label class="block text-brand-dark text-[10px] uppercase font-bold tracking-wider mb-2" id="lbl-date">تاريخ الوصول</label>
+                                <input type="date" class="w-full bg-transparent border-b border-brand-dark/20 pb-2 font-sans font-bold text-lg text-brand-dark outline-none uppercase">
+                            </div>
+                            <button class="w-full md:w-auto bg-brand-dark text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-brand-gold transition-colors text-xs whitespace-nowrap" id="hero-btn">
+                                بحث
+                            </button>
                         </div>
                     </div>
                 </section>
 
-                <!-- Services Section -->
-                <section id="services" class="py-24 bg-slate-50/50 border-t border-slate-100">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="mb-16">
-                            <h2 class="text-2xl font-bold text-slate-900 mb-2" id="serv-title">اختر نموذج النشر المناسب</h2>
-                            <p class="text-slate-500 max-w-2xl font-light" id="serv-subtitle">سواء كنت تريد إدارة كاملة منا أو تحكماً كاملاً لك، لدينا الحل.</p>
+                <!-- Rentals / Short Term -->
+                <section id="rentals" class="py-24 bg-brand-cream">
+                    <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+                        <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                            <div class="text-right rtl:text-right ltr:text-left">
+                                <span class="text-brand-gold uppercase tracking-widest text-xs font-bold" id="loc-tag">مجموعتنا المختارة</span>
+                                <h2 class="text-4xl md:text-5xl text-brand-dark mt-4 font-bold font-sans" id="loc-title">مجمعات سكنية فاخرة</h2>
+                            </div>
+                            <a href="#" class="hidden md:block border-b border-brand-dark pb-1 text-sm font-bold uppercase tracking-widest hover:text-brand-gold hover:border-brand-gold transition-all" id="loc-link">عرض كل الوحدات</a>
                         </div>
-                        <div class="grid lg:grid-cols-2 gap-8">
-                            <!-- Managed -->
-                            <div class="bg-white rounded-2xl p-8 border border-slate-200 hover:border-slate-900 transition-all duration-300">
-                                <h3 class="text-xl font-bold text-slate-900" id="serv-m-title">الخدمة المُدارة</h3>
-                                <p class="text-slate-900 text-sm font-semibold mt-1 uppercase tracking-wider" id="serv-m-price">اشتراك شهري</p>
-                                <p class="text-slate-500 my-6 text-sm leading-relaxed" id="serv-m-desc">نحن نستضيف ونحدث ونحمي النظام. أنت تركز فقط على عملك.</p>
-                                <ul class="space-y-4 mb-8 text-sm text-slate-600" id="serv-m-list">
-                                    <li class="flex items-center gap-3"><svg class="text-slate-900" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> استضافة سحابية عالية الأداء</li>
-                                    <li class="flex items-center gap-3"><svg class="text-slate-900" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> نسخ احتياطي يومي</li>
-                                    <li class="flex items-center gap-3"><svg class="text-slate-900" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> تحديثات تلقائية</li>
-                                </ul>
-                                <button class="w-full py-3 bg-slate-900 text-white rounded-lg font-medium text-sm" id="serv-m-cta">اشترك الآن</button>
+                        
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <!-- Card 1 -->
+                            <div class="group cursor-pointer">
+                                <div class="relative overflow-hidden h-[450px] mb-6 shadow-xl">
+                                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Cairo Resort">
+                                    <div class="absolute top-6 left-6 bg-white px-4 py-2 text-xs font-bold uppercase tracking-widest text-brand-dark" id="badge-cairo">القاهرة</div>
+                                </div>
+                                <h3 class="text-2xl font-sans font-bold text-brand-dark mb-2" id="card-1-title">ذا هايتس ريزيدنس</h3>
+                                <p class="text-brand-stone font-light mb-4" id="card-1-desc">فيلات مستقلة مع حدائق خاصة وبحيرات.</p>
+                                <span class="text-brand-gold font-bold text-sm tracking-wide">$200 <span class="price-suffix">/ ليلة</span></span>
                             </div>
-                            <!-- Self-Hosted -->
-                            <div class="bg-white rounded-2xl p-8 border border-slate-200 hover:border-slate-900 transition-all duration-300">
-                                <h3 class="text-xl font-bold text-slate-900" id="serv-s-title">نشر على خادمك الخاص</h3>
-                                <p class="text-slate-500 text-sm font-semibold mt-1 uppercase tracking-wider" id="serv-s-price">دفعة لمرة واحدة</p>
-                                <p class="text-slate-500 my-6 text-sm leading-relaxed" id="serv-s-desc">نقوم بتثبيت النظام بالكامل على خادمك الخاص (VPS). أنت تمتلك البنية التحتية.</p>
-                                <ul class="space-y-4 mb-8 text-sm text-slate-600" id="serv-s-list">
-                                    <li class="flex items-center gap-3"><svg class="text-slate-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> التثبيت على خادمك الخاص</li>
-                                    <li class="flex items-center gap-3"><svg class="text-slate-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> صلاحيات وصول كاملة (Root)</li>
-                                    <li class="flex items-center gap-3"><svg class="text-slate-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> دعم فني لمدة 30 يوماً</li>
-                                </ul>
-                                <button class="w-full py-3 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium text-sm" id="serv-s-cta">احجز خدمة النشر</button>
+
+                            <!-- Card 2 -->
+                            <div class="group cursor-pointer md:-mt-12">
+                                <div class="relative overflow-hidden h-[450px] mb-6 shadow-xl">
+                                    <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Riyadh Villa">
+                                    <div class="absolute top-6 left-6 bg-white px-4 py-2 text-xs font-bold uppercase tracking-widest text-brand-dark" id="badge-riyadh">الرياض</div>
+                                </div>
+                                <h3 class="text-2xl font-sans font-bold text-brand-dark mb-2" id="card-2-title">واحة النخيل</h3>
+                                <p class="text-brand-stone font-light mb-4" id="card-2-desc">تصميم حديث، خصوصية تامة ومسابح خاصة.</p>
+                                <span class="text-brand-gold font-bold text-sm tracking-wide">$450 <span class="price-suffix">/ ليلة</span></span>
                             </div>
+
+                            <!-- Card 3 -->
+                            <div class="group cursor-pointer">
+                                <div class="relative overflow-hidden h-[450px] mb-6 shadow-xl">
+                                    <img src="https://images.unsplash.com/photo-1597659840241-37e2b9c2f55f?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Dubai Apartment">
+                                    <div class="absolute top-6 left-6 bg-white px-4 py-2 text-xs font-bold uppercase tracking-widest text-brand-dark" id="badge-dubai">دبي</div>
+                                </div>
+                                <h3 class="text-2xl font-sans font-bold text-brand-dark mb-2" id="card-3-title">مارينا فيو</h3>
+                                <p class="text-brand-stone font-light mb-4" id="card-3-desc">شقق فندقية فاخرة بإطلالة مباشرة على البحر.</p>
+                                <span class="text-brand-gold font-bold text-sm tracking-wide">$350 <span class="price-suffix">/ ليلة</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- NEW: Long Term Rentals -->
+                <section id="longterm" class="py-12 bg-white">
+                    <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+                        <div class="text-center mb-16">
+                            <span class="text-brand-gold uppercase tracking-widest text-xs font-bold" id="lt-tag">إقامة دائمة</span>
+                            <h2 class="text-4xl md:text-5xl text-brand-dark mt-4 font-bold font-sans" id="lt-title">مجمعات سكنية متكاملة</h2>
+                        </div>
+                        
+                        <!-- Block 1 -->
+                        <div class="grid lg:grid-cols-2 gap-0 shadow-xl mb-12 group">
+                            <div class="h-[400px] lg:h-[500px] overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Green Compound with Water">
+                            </div>
+                            <div class="bg-brand-dark text-white p-12 lg:p-16 flex flex-col justify-center text-right rtl:text-right ltr:text-left">
+                                <span class="text-brand-gold uppercase tracking-widest text-xs font-bold mb-4" id="lt-1-sub">المدينة الخضراء</span>
+                                <h3 class="text-3xl font-sans font-bold mb-6" id="lt-1-title">حياة وسط الطبيعة</h3>
+                                <p class="text-brand-stone text-lg leading-relaxed mb-8" id="lt-1-desc">
+                                    مجمعات سكنية مستوحاة من مدن المستقبل. مساحات خضراء تمتد لمد البصر، بحيرات صناعية، وجسور خشبية تخلق جواً من الهدوء والرفاهية.
+                                </p>
+                                <button class="border border-brand-gold text-brand-gold px-8 py-3 uppercase text-xs font-bold hover:bg-brand-gold hover:text-brand-dark transition-all w-fit self-end rtl:self-end ltr:self-start" id="lt-1-btn">شاهد المخطط</button>
+                            </div>
+                        </div>
+
+                        <!-- Block 2 -->
+                        <div class="grid lg:grid-cols-2 gap-0 shadow-xl mb-12 group">
+                            <div class="bg-brand-gray text-brand-dark p-12 lg:p-16 flex flex-col justify-center text-right rtl:text-right ltr:text-left order-2 lg:order-1">
+                                <span class="text-brand-dark uppercase tracking-widest text-xs font-bold mb-4" id="lt-2-sub">العمارة الحديثة</span>
+                                <h3 class="text-3xl font-sans font-bold mb-6" id="lt-2-title">إطلالات مائية خلابة</h3>
+                                <p class="text-gray-600 text-lg leading-relaxed mb-8" id="lt-2-desc">
+                                    تصاميم معمارية عصرية تتخللها قنوات مائية زرقاء وحدائق منسقة بعناية. استمتع بمسارات المشي والركض المحاطة بالطبيعة.
+                                </p>
+                                <button class="bg-brand-dark text-white px-8 py-3 uppercase text-xs font-bold hover:bg-brand-gold transition-all w-fit self-end rtl:self-end ltr:self-start" id="lt-2-btn">احجز زيارة</button>
+                            </div>
+                            <div class="h-[400px] lg:h-[500px] order-1 lg:order-2 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Modern Building Canal">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- NEW: Community Gallery (With ONLINE Valid Placeholders) -->
+                <section id="gallery" class="py-12 bg-brand-cream border-t border-brand-dark/5">
+                    <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+                        <div class="flex justify-between items-end mb-10">
+                            <div>
+                                <h3 class="text-3xl font-sans font-bold text-brand-dark" id="gal-title">الحياة في مجمعاتنا</h3>
+                                <!-- Added Subtitle -->
+                                <p class="text-brand-stone text-sm font-bold uppercase tracking-widest mt-2" id="gal-sub">منازل للإيجار</p>
+                            </div>
+                            <!-- Reversed Buttons Logic: rtl:rotate-180 -->
+                            <div class="flex gap-2">
+                                <button class="w-10 h-10 border border-brand-dark text-brand-dark flex items-center justify-center hover:bg-brand-dark hover:text-white transition-colors transform rtl:rotate-180">&larr;</button>
+                                <button class="w-10 h-10 border border-brand-dark text-brand-dark flex items-center justify-center hover:bg-brand-dark hover:text-white transition-colors transform rtl:rotate-180">&rarr;</button>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                            <!-- Image 1 -->
+                            <div class="relative h-80 group overflow-hidden shadow-lg rounded-sm cursor-pointer">
+                                <img src="https://images.unsplash.com/photo-1584017259031-442694724d65?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Beige Compound Garden">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
+                                <div class="absolute bottom-4 right-4 text-white">
+                                    <p class="font-bold text-lg" id="img-1-title">حدائق النزهة</p>
+                                </div>
+                            </div>
+
+                            <!-- Image 2 -->
+                            <div class="relative h-80 group overflow-hidden shadow-lg rounded-sm cursor-pointer">
+                                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Modern White Complex">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
+                                <div class="absolute bottom-4 right-4 text-white">
+                                    <p class="font-bold text-lg" id="img-2-title">مجمع أزور</p>
+                                </div>
+                            </div>
+
+                            <!-- Image 3 -->
+                            <div class="relative h-80 group overflow-hidden shadow-lg rounded-sm cursor-pointer">
+                                <img src="https://images.unsplash.com/photo-1558036117-15d82a90b9b1?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Wide Lawn Compound">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
+                                <div class="absolute bottom-4 right-4 text-white">
+                                    <p class="font-bold text-lg" id="img-3-title">بارك فيو</p>
+                                </div>
+                            </div>
+
+                            <!-- Image 4 -->
+                            <div class="relative h-80 group overflow-hidden shadow-lg rounded-sm cursor-pointer">
+                                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Modern Apartments">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all"></div>
+                                <div class="absolute bottom-4 right-4 text-white">
+                                    <p class="font-bold text-lg" id="img-4-title">ريزيدنس 90</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Owners / Management Section -->
+                <section id="owners" class="py-24 bg-white border-y border-brand-dark/5">
+                    <div class="max-w-[1400px] mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="order-2 lg:order-1 relative">
+                            <div class="absolute -top-6 -left-6 w-32 h-32 bg-brand-gold/10 z-0"></div>
+                            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop" class="relative z-10 w-full shadow-2xl" alt="Property Management">
+                        </div>
+                        <div class="order-1 lg:order-2 text-right rtl:text-right ltr:text-left">
+                            <span class="text-brand-gold uppercase tracking-widest text-xs font-bold" id="own-tag">للمُلاك والمستثمرين</span>
+                            <h2 class="text-4xl md:text-5xl font-sans mt-4 mb-8 leading-tight text-brand-dark font-bold" id="own-title">أدِر عقارك<br>بمعايير عالمية</h2>
+                            <p class="text-brand-stone text-lg mb-8 leading-relaxed" id="own-desc">
+                                انضم إلى برنامج "HOME Management". نحن نتولى التسويق، الصيانة، وعلاقات المستأجرين، لتتمتع أنت بعوائد استثمارية مجزية دون عناء الإدارة.
+                            </p>
+                            <ul class="space-y-4 mb-10 font-bold text-brand-dark">
+                                <li class="flex items-center gap-4 rtl:flex-row ltr:flex-row-reverse rtl:justify-start ltr:justify-end">
+                                    <span class="text-brand-gold text-xl">✓</span> <span id="o1">تسويق عالمي للعقار</span>
+                                </li>
+                                <li class="flex items-center gap-4 rtl:flex-row ltr:flex-row-reverse rtl:justify-start ltr:justify-end">
+                                    <span class="text-brand-gold text-xl">✓</span> <span id="o2">صيانة وحماية الأصول</span>
+                                </li>
+                                <li class="flex items-center gap-4 rtl:flex-row ltr:flex-row-reverse rtl:justify-start ltr:justify-end">
+                                    <span class="text-brand-gold text-xl">✓</span> <span id="o3">عائد استثماري مضمون</span>
+                                </li>
+                            </ul>
+                            <button onclick="setView('contact')" class="bg-brand-dark text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-brand-gold transition-colors">
+                                <span id="own-btn">سجّل عقارك</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Services Section (Updated Icons and Fonts) -->
+                <section id="services" class="py-24 bg-brand-dark text-brand-cream">
+                    <div class="max-w-[1400px] mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+                        <div class="text-right rtl:text-right ltr:text-left">
+                            <span class="text-brand-gold uppercase tracking-widest text-xs font-bold" id="serv-tag">الخدمات</span>
+                            <h2 class="text-4xl md:text-5xl font-sans mt-4 mb-8 leading-tight font-bold" id="serv-title">تجربة فندقية<br>في منزلك</h2>
+                            <p class="text-brand-stone font-light text-lg mb-8 leading-relaxed" id="serv-desc">
+                                نحن لا نقدم مجرد مفاتيح. فريقنا المخصص لخدمة الكونسيرج متاح 24/7 لضمان أن تكون إقامتك مثالية، مع خدمات التنظيف والحجز الخاص.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-8">
+                                <div>
+                                    <div class="text-brand-gold mb-3">
+                                        <!-- Concierge Icon -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                                    </div>
+                                    <h4 class="text-white font-sans font-bold text-xl mb-2" id="serv-1">كونسيرج 24/7</h4>
+                                </div>
+                                <div>
+                                    <div class="text-brand-gold mb-3">
+                                        <!-- Room Service Icon -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 19v2"/><path d="M18 19v2"/><path d="M2 19h20"/><path d="M2 19c0-6 4-10 10-10s10 4 10 10"/><path d="M12 9V5"/><path d="M10 5h4"/></svg>
+                                    </div>
+                                    <h4 class="text-white font-sans font-bold text-xl mb-2" id="serv-2">خدمة الغرف</h4>
+                                </div>
+                                <div>
+                                    <div class="text-brand-gold mb-3">
+                                        <!-- Car Icon -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M7 15h.01"/><path d="M17 15h.01"/></svg>
+                                    </div>
+                                    <h4 class="text-white font-sans font-bold text-xl mb-2" id="serv-3">نقل خاص VIP</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative h-[600px]">
+                            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover shadow-2xl brightness-75 hover:brightness-100 transition-all duration-700" alt="Concierge">
                         </div>
                     </div>
                 </section>
             </div>
 
             <!-- Contact View -->
-            <div id="contact-view" class="hidden">
-                <section class="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[80vh]">
+            <div id="contact-view" class="hidden fade-enter">
+                <section class="pt-32 pb-24 px-6 max-w-7xl mx-auto min-h-[80vh]">
                     <div class="grid md:grid-cols-2 gap-16">
-                        <div>
-                            <h1 class="text-4xl font-bold text-slate-900 mb-4" id="con-title">تواصل معنا</h1>
-                            <p class="text-slate-500 mb-12 text-lg font-light" id="con-subtitle">هل لديك أسئلة حول خدمات النشر لدينا؟ نحن هنا للمساعدة.</p>
-                            <div class="space-y-8">
-                                <div class="flex items-start gap-4">
-                                    <div class="p-3 bg-slate-100 rounded-full text-slate-900"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
-                                    <div>
-                                        <h4 class="font-bold text-xs uppercase tracking-wider text-slate-400 mb-1">Email</h4>
-                                        <p class="text-slate-900 font-medium">hello@aisaas.site</p>
-                                    </div>
+                        <div class="text-right rtl:text-right ltr:text-left">
+                            <span class="text-brand-gold uppercase tracking-widest text-xs font-bold" id="con-tag">تواصل معنا</span>
+                            <h1 class="text-5xl font-sans text-brand-dark mb-6 mt-4 font-bold" id="con-title">ابدأ رحلتك</h1>
+                            <p class="text-brand-stone mb-12 text-lg font-light leading-relaxed" id="con-sub">
+                                سواء كنت تبحث عن إقامة استثنائية أو ترغب في استثمار عقارك، فريقنا جاهز للمساعدة.
+                            </p>
+                            <div class="space-y-8 border-t border-brand-stone/20 pt-8">
+                                <div>
+                                    <h4 class="font-bold text-xs uppercase tracking-wider text-brand-gold mb-2">WhatsApp VIP</h4>
+                                    <p class="text-brand-dark font-serif text-2xl" dir="ltr">+971 50 000 0000</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xs uppercase tracking-wider text-brand-gold mb-2">Email</h4>
+                                    <p class="text-brand-dark font-serif text-2xl">booking@home.ae</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100">
-                            <form id="contact-form" class="space-y-6" onsubmit="handleContact(event)">
-                                <div>
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2" id="label-name">الاسم</label>
-                                    <input type="text" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-slate-900 transition-colors">
+                        
+                        <div class="bg-white p-10 shadow-2xl border border-brand-stone/10">
+                            <form id="contact-form" class="space-y-8" onsubmit="handleContact(event)">
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="text-right rtl:text-right ltr:text-left">
+                                        <label class="block text-xs font-bold uppercase tracking-wider text-brand-stone mb-3" id="lbl-name">الاسم</label>
+                                        <input type="text" required class="w-full bg-brand-cream border-b border-brand-stone/30 px-0 py-2 outline-none focus:border-brand-gold transition-colors text-brand-dark">
+                                    </div>
+                                    <div class="text-right rtl:text-right ltr:text-left">
+                                        <label class="block text-xs font-bold uppercase tracking-wider text-brand-stone mb-3" id="lbl-phone">الهاتف</label>
+                                        <input type="tel" required class="w-full bg-brand-cream border-b border-brand-stone/30 px-0 py-2 outline-none focus:border-brand-gold transition-colors text-brand-dark">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2" id="label-email">البريد الإلكتروني</label>
-                                    <input type="email" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-slate-900 transition-colors">
+                                <div class="text-right rtl:text-right ltr:text-left">
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-stone mb-3" id="lbl-type">نوع الطلب</label>
+                                    <select class="w-full bg-brand-cream border-b border-brand-stone/30 px-0 py-2 outline-none focus:border-brand-gold transition-colors text-brand-dark cursor-pointer text-right rtl:text-right ltr:text-left">
+                                        <option>حجز إقامة (Booking)</option>
+                                        <option>إدارة عقار (Management)</option>
+                                        <option>أخرى (Other)</option>
+                                    </select>
                                 </div>
-                                <div>
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2" id="label-msg">الرسالة</label>
-                                    <textarea rows="4" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-slate-900 transition-colors resize-none"></textarea>
+                                <div class="text-right rtl:text-right ltr:text-left">
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-stone mb-3" id="lbl-msg">تفاصيل الطلب</label>
+                                    <textarea rows="3" class="w-full bg-brand-cream border-b border-brand-stone/30 px-0 py-2 outline-none focus:border-brand-gold transition-colors resize-none text-brand-dark"></textarea>
                                 </div>
-                                <button type="submit" class="w-full py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all flex items-center justify-center gap-2" id="btn-send">
-                                    إرسال الرسالة
+                                <button type="submit" class="w-full py-5 bg-brand-dark text-white font-latin-serif italic text-lg hover:bg-brand-gold hover:text-white transition-all duration-300" id="btn-send">
+                                    إرسال الطلب
                                 </button>
                             </form>
-                            <div id="form-success" class="hidden h-full flex flex-col items-center justify-center text-center py-12">
-                                <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                                </div>
-                                <p class="text-lg font-medium text-slate-900" id="txt-success">شكراً لك! سنرد عليك في أقرب وقت ممكن.</p>
+                            <div id="form-success" class="hidden text-center py-12">
+                                <span class="text-brand-gold text-4xl mb-4 block">✦</span>
+                                <p class="text-xl font-serif text-brand-dark" id="txt-success">شكراً. تم استلام طلبك وسنتواصل معك قريباً.</p>
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
+
         </main>
 
+        <!-- WhatsApp Button (UPDATED) -->
+        <a href="https://wa.me/213774079066" target="_blank" class="fixed bottom-8 left-8 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center gap-2 group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.698c.93.509 1.842.769 2.808.769 3.181 0 5.768-2.587 5.768-5.766.001-3.182-2.585-5.769-5.766-5.769zm9.224 1.216l-2.404 1.839c-.191.146-.447.169-.661.061l-2.368-1.185c-.214-.107-.468-.085-.661.061l-2.404 1.839c-.194.148-.283.393-.228.631l.666 2.879c.055.237.245.418.483.458l2.909.488c.237.04.476-.084.588-.306l1.242-2.483c.112-.224.061-.493-.129-.661l-1.619-1.428c-.191-.168-.191-.462 0-.63l1.619-1.428c.191-.168.485-.168.675 0l1.619 1.428c.191.168.485.168.675 0l2.404-1.839c.194-.148.283-.393.228-.631l-.666-2.879c-.055-.237-.245-.418-.483-.458l-2.909-.488c-.237-.04-.476.084-.588.306l-1.242 2.483c-.112.224-.061.493.129.661l1.619 1.428c.191.168.191.462 0 .63l-1.619 1.428c-.191.168-.485.168-.675 0z" fill-opacity="0"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+            <span class="hidden group-hover:block whitespace-nowrap font-medium text-sm transition-all">Chat on WhatsApp</span>
+        </a>
+
         <!-- Footer -->
-        <footer class="bg-white text-slate-500 py-16 border-t border-slate-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 justify-between items-center gap-8">
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-6 h-6 bg-slate-900 rounded flex items-center justify-center text-white text-[10px]">🤖</div>
-                        <span class="font-bold text-base text-slate-900">AISaaS</span>
+        <footer class="bg-brand-dark text-brand-stone py-20 border-t border-white/10">
+            <div class="max-w-[1400px] mx-auto px-6 grid md:grid-cols-4 gap-12 text-right rtl:text-right ltr:text-left">
+                
+                <div class="md:col-span-1">
+                    <!-- Footer Logo Adjusted -->
+                    <div class="inline-flex flex-col mb-6">
+                        <h2 class="text-3xl font-logo font-bold text-white tracking-[0.15em] leading-none ml-1">HOMES</h2>
+                        <span class="text-[0.5rem] uppercase tracking-[0.6em] text-brand-gold mt-1 leading-none mr-[-0.6em]">Luxury Rentals</span>
                     </div>
-                    <p class="text-sm max-w-xs" id="footer-desc">تمكين الشركات من خلال أتمتة المصادر المفتوحة.</p>
+                    <p class="text-sm leading-relaxed mb-6" id="foot-desc">
+                        الوجهة الأولى للإقامات الفاخرة وإدارة العقارات. نجمع بين راحة المنزل وخدمات الفنادق العالمية.
+                    </p>
                 </div>
-                <div class="md:text-left text-right">
-                    <p class="text-sm font-medium text-slate-900 mb-1" id="footer-rights">© 2026 AI SaaS. جميع الحقوق محفوظة.</p>
-                    <p class="text-xs text-slate-400 italic font-medium" id="footer-template">هذا هو قالب GPT4AR</p>
+
+                <div>
+                    <h4 class="text-brand-gold text-xs uppercase tracking-widest font-bold mb-6" id="foot-l1">الشركة</h4>
+                    <ul class="space-y-4 text-sm font-light">
+                        <li><a href="#" class="hover:text-white transition-colors" id="lnk-abt">قصتنا</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" id="lnk-own">للمُلاك</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" id="lnk-pr">الصحافة</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-brand-gold text-xs uppercase tracking-widest font-bold mb-6" id="foot-l2">الدعم القانوني</h4>
+                    <ul class="space-y-4 text-sm font-light">
+                        <li><a href="#" class="hover:text-white transition-colors" id="lnk-priv">سياسة الخصوصية</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" id="lnk-term">الشروط والأحكام</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" id="lnk-ten">خدمات المستأجرين</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-brand-gold text-xs uppercase tracking-widest font-bold mb-6" id="foot-news">النشرة الحصرية</h4>
+                    <div class="flex border-b border-brand-gold/50 pb-2">
+                        <input type="email" placeholder="Email" class="bg-transparent outline-none w-full text-white placeholder-brand-stone/50 text-sm">
+                        <button class="text-white hover:text-brand-gold transition-colors uppercase text-xs font-bold">OK</button>
+                    </div>
+                </div>
+            </div>
+            <div class="max-w-[1400px] mx-auto px-6 mt-16 pt-8 border-t border-white/5 text-center flex flex-col md:flex-row justify-between items-center text-xs uppercase tracking-widest">
+                <p id="foot-copy">© 2026 HOME Luxury Rentals. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-brand-gold">Instagram</a>
+                    <a href="#" class="hover:text-brand-gold">LinkedIn</a>
                 </div>
             </div>
         </footer>
@@ -212,96 +523,181 @@
         const content = {
             en: {
                 dir: 'ltr',
-                nav: { home: "Home", features: "Technology", pricing: "Services", contact: "Contact", cta: "Get Started" },
-                hero: { badge: "Open Source Powerhouse", title: "Next-Gen AI CRM & Automation", subtitle: "Deploy a fully integrated ecosystem with Chatwoot, n8n, Typebot, and WhatsApp.", cta1: "View Plans", cta2: "Learn More" },
-                serv: { title: "Choose Your Model", sub: "Whether you want hands-off management or total control.", mt: "Managed Service", mp: "Subscription", md: "We host, maintain, and update everything.", ml: ["Cloud hosting", "Daily Backups", "Automatic Updates"], mc: "Subscribe Now", st: "On-Premise", sp: "One-Time Fee", sd: "We deploy on your own servers (VPS).", sl: ["Installation on VPS", "Full Root Access", "30 Days Support"], sc: "Book Deployment" },
-                con: { title: "Get in Touch", sub: "Questions? We're here to help.", n: "Name", e: "Email", m: "Message", s: "Send Message", ok: "Success! We'll reply soon." },
-                foot: { desc: "Empowering businesses with open-source automation.", r: "© 2026 AI SaaS. All rights reserved.", t: "This is GPT4AR template" }
+                nav: { home: "Home", port: "Short Stays", long: "Long Stays", gallery: "Community", serv: "Services", owners: "Landlords", contact: "Contact", cta: "Book Now" },
+                hero: { sub: "Luxury Property Management & Rentals", title: "Live Luxury<br>In Every Detail", desc: "Private villas, penthouses, and hotel apartments in the finest residential compounds.", dest: "Destination", date: "Arrival Date", btn: "Search" },
+                search_opt: { r: "Riyadh, Saudi Arabia", c: "New Cairo, Egypt", d: "Palm Jumeirah, Dubai" },
+                loc: { tag: "Our Collection", title: "Exclusive Compounds", link: "View All Units", c1t: "The Heights Residence", c1d: "Standalone villas with private gardens and lakes.", c2t: "Al Nakheel Oasis", c2d: "Modern design, total privacy, private pools.", c3t: "Marina View", c3d: "Luxury hotel apartments with direct sea views." },
+                lt: { tag: "Permanent Living", title: "Integrated Communities", s1: "Green City", t1: "Life in Nature", d1: "Compounds inspired by future cities. Vast green spaces, artificial lakes, and wooden bridges creating an atmosphere of calm and luxury.", b1: "View Masterplan", s2: "Modern Architecture", t2: "Stunning Water Views", d2: "Modern architectural designs interspersed with blue water canals and carefully landscaped gardens. Enjoy walking and jogging paths surrounded by nature.", b2: "Book Visit" },
+                gal: { title: "Life in Our Communities", sub: "Houses for Rent", i1: "Al Nozha Gardens", i2: "Azure Complex", i3: "Park View", i4: "Residence 90" },
+                own: { tag: "Owners & Investors", title: "Manage Your Property<br>With Global Standards", desc: "Join 'HOME Management'. We handle marketing, maintenance, and tenant relations, so you enjoy returns without the hassle.", o1: "Global Marketing", o2: "Maintenance & Asset Protection", o3: "Guaranteed ROI", btn: "List Your Property" },
+                serv: { tag: "Services", title: "Hotel Experience<br>At Home", desc: "We provide more than just keys. Our 24/7 concierge ensures your stay is perfect with housekeeping and private booking.", s1: "24/7 Concierge", s2: "Housekeeping", s3: "VIP Transfer" },
+                con: { tag: "Get in Touch", title: "Start Your Journey", sub: "Whether you're looking for an exceptional stay or want to invest, our team is ready.", n: "Name", p: "Phone", t: "Request Type", m: "Request Details", btn: "Submit Request", ok: "Thank you. We have received your request." },
+                foot: { desc: "The premier destination for luxury rentals and property management. Combining home comfort with world-class hotel services.", l1: "Company", abt: "Our Story", own: "For Landlords", pr: "Press", l2: "Legal", priv: "Privacy Policy", term: "Terms", ten: "Tenant Services", news: "Exclusive Newsletter", copy: "© 2026 HOME Luxury Rentals. All rights reserved." },
+                cities: { c1: "Cairo", c2: "Riyadh", c3: "Dubai" },
+                night: "/ night"
             },
             ar: {
                 dir: 'rtl',
-                nav: { home: "الرئيسية", features: "التقنيات", pricing: "الخدمات", contact: "تواصل معنا", cta: "ابدأ الآن" },
-                hero: { badge: "قوة المصادر المفتوحة", title: "الجيل القادم من أنظمة إدارة العملاء والأتمتة", subtitle: "نظام بيئي متكامل يجمع بين Chatwoot و n8n و Typebot و واتساب. امتلك بياناتك وأتمت محادثاتك.", cta1: "عرض الخطط", cta2: "المزيد من المعلومات" },
-                serv: { title: "اختر نموذج النشر المناسب", sub: "سواء كنت تريد إدارة كاملة منا أو تحكماً كاملاً لك، لدينا الحل.", mt: "الخدمة المُدارة", mp: "اشتراك شهري", md: "نحن نستضيف ونحدث ونحمي النظام. أنت تركز فقط على عملك.", ml: ["استضافة سحابية عالية الأداء", "نسخ احتياطي يومي", "تحديثات تلقائية"], mc: "اشترك الآن", st: "نشر على خادمك الخاص", sp: "دفعة لمرة واحدة", sd: "نقوم بتثبيت النظام بالكامل على خادمك الخاص (VPS). أنت تمتلك البنية التحتية.", sl: ["التثبيت على خادمك الخاص", "صلاحيات وصول كاملة (Root)", "دعم فني لمدة 30 يوماً"], sc: "احجز خدمة النشر" },
-                con: { title: "تواصل معنا", sub: "هل لديك أسئلة حول خدمات النشر لدينا؟ نحن هنا للمساعدة.", n: "الاسم", e: "البريد الإلكتروني", m: "الرسالة", s: "إرسال الرسالة", ok: "شكراً لك! سنرد عليك في أقرب وقت ممكن." },
-                foot: { desc: "تمكين الشركات من خلال أتمتة المصادر المفتوحة.", r: "© 2026 AI SaaS. جميع الحقوق محفوظة.", t: "هذا هو قالب GPT4AR" }
+                nav: { home: "الرئيسية", port: "إقامات قصيرة", long: "إقامات طويلة", gallery: "المجتمع", serv: "الخدمات", owners: "للمُلاك", contact: "تواصل معنا", cta: "احجز الآن" },
+                hero: { sub: "إدارة الممتلكات والإيجارات الفاخرة", title: "عِش الرفاهية<br>بكل تفاصيلها", desc: "فيلات خاصة، بنتهاوس، وشقق فندقية في أرقى المجمعات السكنية.", dest: "الوجهة", date: "تاريخ الوصول", btn: "بحث" },
+                search_opt: { r: "الرياض، السعودية", c: "القاهرة الجديدة، مصر", d: "نخلة جميرا، دبي" },
+                loc: { tag: "مجموعتنا المختارة", title: "مجمعات سكنية فاخرة", link: "عرض كل الوحدات", c1t: "ذا هايتس ريزيدنس", c1d: "فيلات مستقلة مع حدائق خاصة وبحيرات.", c2t: "واحة النخيل", c2d: "تصميم حديث، خصوصية تامة ومسابح خاصة.", c3t: "مارينا فيو", c3d: "شقق فندقية فاخرة بإطلالة مباشرة على البحر." },
+                lt: { tag: "إقامة دائمة", title: "مجمعات سكنية متكاملة", s1: "المدينة الخضراء", t1: "حياة وسط الطبيعة", d1: "مجمعات سكنية مستوحاة من مدن المستقبل. مساحات خضراء تمتد لمد البصر، بحيرات صناعية، وجسور خشبية تخلق جواً من الهدوء والرفاهية.", b1: "شاهد المخطط", s2: "العمارة الحديثة", t2: "إطلالات مائية خلابة", d2: "تصاميم معمارية عصرية تتخللها قنوات مائية زرقاء وحدائق منسقة بعناية. استمتع بمسارات المشي والركض المحاطة بالطبيعة.", b2: "احجز زيارة" },
+                gal: { title: "الحياة في مجمعاتنا", sub: "منازل للإيجار", i1: "حدائق النزهة", i2: "مجمع أزور", i3: "بارك فيو", i4: "ريزيدنس 90" },
+                own: { tag: "للمُلاك والمستثمرين", title: "أدِر عقارك<br>بمعايير عالمية", desc: "انضم إلى برنامج 'HOME Management'. نحن نتولى التسويق، الصيانة، وعلاقات المستأجرين، لتتمتع أنت بعوائد استثمارية مجزية دون عناء الإدارة.", o1: "تسويق عالمي للعقار", o2: "صيانة وحماية الأصول", o3: "عائد استثماري مضمون", btn: "سجّل عقارك" },
+                serv: { tag: "الخدمات", title: "تجربة فندقية<br>في منزلك", desc: "نحن لا نقدم مجرد مفاتيح. فريقنا المخصص لخدمة الكونسيرج متاح 24/7 لضمان أن تكون إقامتك مثالية، مع خدمات التنظيف والحجز الخاص.", s1: "كونسيرج 24/7", s2: "خدمة الغرف", s3: "نقل خاص VIP" },
+                con: { tag: "تواصل معنا", title: "ابدأ رحلتك", sub: "سواء كنت تبحث عن إقامة استثنائية أو ترغب في استثمار عقارك، فريقنا جاهز للمساعدة.", n: "الاسم", p: "الهاتف", t: "نوع الطلب", m: "تفاصيل الطلب", btn: "إرسال الطلب", ok: "شكراً. تم استلام طلبك وسنتواصل معك قريباً." },
+                foot: { desc: "الوجهة الأولى للإقامات الفاخرة وإدارة العقارات. نجمع بين راحة المنزل وخدمات الفنادق العالمية.", l1: "الشركة", abt: "قصتنا", own: "للمُلاك", pr: "الصحافة", l2: "الدعم القانوني", priv: "سياسة الخصوصية", term: "الشروط والأحكام", ten: "خدمات المستأجرين", news: "النشرة الحصرية", copy: "© 2026 HOME Luxury Rentals. جميع الحقوق محفوظة." },
+                cities: { c1: "القاهرة", c2: "الرياض", c3: "دبي" },
+                night: "/ ليلة"
             },
             fr: {
                 dir: 'ltr',
-                nav: { home: "Accueil", features: "Technologies", pricing: "Services", contact: "Contact", cta: "Démarrer" },
-                hero: { badge: "Puissance Open Source", title: "CRM IA & Automatisation", subtitle: "Déployez un écosystème intégré avec Chatwoot, n8n, Typebot et WhatsApp.", cta1: "Voir les plans", cta2: "En savoir plus" },
-                serv: { title: "Choisissez votre modèle", sub: "Gestion complète ou contrôle total.", mt: "Service Géré", mp: "Abonnement", md: "Nous hébergeons et maintenons tout.", ml: ["Cloud haute performance", "Sauvegardes quotidiennes", "Mises à jour auto"], mc: "S'abonner", st: "Auto-hébergé", sp: "Frais unique", sd: "Nous déployons sur votre propre serveur (VPS).", sl: ["Installation sur VPS", "Accès Root complet", "30 jours de support"], sc: "Réserver" },
-                con: { title: "Contactez-nous", sub: "Des questions ? Nous sommes là.", n: "Nom", e: "E-mail", m: "Message", s: "Envoyer", ok: "Merci ! Réponse rapide garantie." },
-                foot: { desc: "Autonomiser les entreprises grâce à l'open source.", r: "© 2026 AI SaaS. Tous droits réservés.", t: "Ceci est le modèle GPT4AR" }
+                nav: { home: "Accueil", port: "Courts Séjours", long: "Longs Séjours", gallery: "Communauté", serv: "Services", owners: "Propriétaires", contact: "Contact", cta: "Réserver" },
+                hero: { sub: "Gestion Locative & Séjours de Luxe", title: "Vivez le Luxe<br>Dans Chaque Détail", desc: "Villas privées, penthouses et appartements hôteliers dans les plus beaux complexes résidentiels.", dest: "Destination", date: "Date d'arrivée", btn: "Rechercher" },
+                search_opt: { r: "Riyad, Arabie Saoudite", c: "Nouveau Caire, Égypte", d: "Palm Jumeirah, Dubaï" },
+                loc: { tag: "Notre Collection", title: "Complexes Exclusifs", link: "Voir tout", c1t: "The Heights Residence", c1d: "Villas indépendantes avec jardins privés et lacs.", c2t: "Al Nakheel Oasis", c2d: "Design moderne, intimité totale, piscines privées.", c3t: "Marina View", c3d: "Appartements hôteliers de luxe avec vue mer directe." },
+                lt: { tag: "Vie Permanente", title: "Communautés Intégrées", s1: "Ville Verte", t1: "La Vie en Nature", d1: "Des complexes inspirés des villes du futur. Vastes espaces verts, lacs artificiels et ponts en bois créant une atmosphère de calme et de luxe.", b1: "Voir le Plan", s2: "Architecture Moderne", t2: "Vues sur l'Eau", d2: "Designs architecturaux modernes entrecoupés de canaux d'eau bleue et de jardins soigneusement aménagés. Profitez de sentiers de marche entourés de nature.", b2: "Réserver une visite" },
+                gal: { title: "Vie de Quartier", sub: "Maisons à louer", i1: "Jardins Al Nozha", i2: "Complexe Azure", i3: "Park View", i4: "Residence 90" },
+                own: { tag: "Propriétaires & Investisseurs", title: "Gérez Votre Bien<br>Standards Mondiaux", desc: "Rejoignez 'HOME Management'. Nous gérons le marketing, la maintenance et les locataires pour que vous profitiez de vos revenus sans effort.", o1: "Marketing Global", o2: "Maintenance & Protection", o3: "ROI Garanti", btn: "Inscrivez votre bien" },
+                serv: { tag: "Services", title: "Expérience Hôtelière<br>À Domicile", desc: "Plus qu'une simple remise de clés. Notre conciergerie 24/7 assure un séjour parfait avec ménage et réservations privées.", s1: "Conciergerie 24/7", s2: "Ménage", s3: "Transfert VIP" },
+                con: { tag: "Contactez-nous", title: "Commencez l'Expérience", sub: "Que vous cherchiez un séjour exceptionnel ou souhaitiez investir, notre équipe est prête.", n: "Nom", p: "Téléphone", t: "Type de Demande", m: "Détails", btn: "Envoyer", ok: "Merci. Nous avons bien reçu votre demande." },
+                foot: { desc: "La première destination pour la location de luxe et la gestion immobilière. Alliant confort du domicile et services hôteliers.", l1: "Société", abt: "Notre Histoire", own: "Pour Propriétaires", pr: "Presse", l2: "Légal", priv: "Confidentialité", term: "Conditions", ten: "Services Locataires", news: "Newsletter", copy: "© 2026 HOME Luxury Rentals. Tous droits réservés." },
+                cities: { c1: "Le Caire", c2: "Riyad", c3: "Dubaï" },
+                night: "/ nuit"
             }
         };
 
-        let currentLang = 'ar';
-        let currentView = 'home';
-
         function setLang(l) {
-            currentLang = l;
             const t = content[l];
             document.documentElement.lang = l;
             document.documentElement.dir = t.dir;
-            document.body.className = t.dir === 'rtl' ? 'rtl' : 'ltr';
+            document.body.className = t.dir === 'rtl' ? 'rtl bg-brand-cream text-brand-dark overflow-x-hidden' : 'ltr bg-brand-cream text-brand-dark overflow-x-hidden';
 
-            // Update Nav
+            // Navigation
             document.getElementById('nav-home').innerText = t.nav.home;
-            document.getElementById('nav-features').innerText = t.nav.features;
-            document.getElementById('nav-services').innerText = t.nav.pricing;
+            document.getElementById('nav-portfolio').innerText = t.nav.port;
+            document.getElementById('nav-longterm').innerText = t.nav.long;
+            document.getElementById('nav-gallery').innerText = t.nav.gallery;
+            document.getElementById('nav-services').innerText = t.nav.serv;
+            document.getElementById('nav-owners').innerText = t.nav.owners;
             document.getElementById('nav-contact').innerText = t.nav.contact;
             document.getElementById('nav-cta').innerText = t.nav.cta;
             
+            // Mobile Nav
+            document.getElementById('m-nav-home').innerText = t.nav.home;
+            document.getElementById('m-nav-portfolio').innerText = t.nav.port;
+            document.getElementById('m-nav-long').innerText = t.nav.long;
+            document.getElementById('m-nav-gallery').innerText = t.nav.gallery;
+            document.getElementById('m-nav-services').innerText = t.nav.serv;
+            document.getElementById('m-nav-owners').innerText = t.nav.owners;
+            document.getElementById('m-nav-contact').innerText = t.nav.contact;
+
             // Hero
-            document.getElementById('hero-badge').innerText = t.hero.badge;
-            document.getElementById('hero-title').innerText = t.hero.title;
-            document.getElementById('hero-subtitle').innerText = t.hero.subtitle;
-            document.getElementById('hero-cta-primary').innerText = t.hero.cta1;
-            document.getElementById('hero-cta-secondary').innerText = t.hero.cta2;
+            document.getElementById('hero-subtitle').innerText = t.hero.sub;
+            document.getElementById('hero-title').innerHTML = t.hero.title;
+            document.getElementById('hero-desc').innerText = t.hero.desc;
+            document.getElementById('lbl-dest').innerText = t.hero.dest;
+            document.getElementById('lbl-date').innerText = t.hero.date;
+            document.getElementById('hero-btn').innerText = t.hero.btn;
+            
+            // Search Options Translation
+            document.getElementById('opt-riyadh').innerText = t.search_opt.r;
+            document.getElementById('opt-cairo').innerText = t.search_opt.c;
+            document.getElementById('opt-dubai').innerText = t.search_opt.d;
+
+            // Locations
+            document.getElementById('loc-tag').innerText = t.loc.tag;
+            document.getElementById('loc-title').innerText = t.loc.title;
+            document.getElementById('loc-link').innerText = t.loc.link;
+            document.getElementById('card-1-title').innerText = t.loc.c1t;
+            document.getElementById('card-1-desc').innerText = t.loc.c1d;
+            document.getElementById('card-2-title').innerText = t.loc.c2t;
+            document.getElementById('card-2-desc').innerText = t.loc.c2d;
+            document.getElementById('card-3-title').innerText = t.loc.c3t;
+            document.getElementById('card-3-desc').innerText = t.loc.c3d;
+
+            // Cities & Price Suffix
+            document.getElementById('badge-cairo').innerText = t.cities.c1;
+            document.getElementById('badge-riyadh').innerText = t.cities.c2;
+            document.getElementById('badge-dubai').innerText = t.cities.c3;
+            document.querySelectorAll('.price-suffix').forEach(el => el.innerText = t.night);
+
+            // Long Term
+            document.getElementById('lt-tag').innerText = t.lt.tag;
+            document.getElementById('lt-title').innerText = t.lt.title;
+            
+            document.getElementById('lt-1-sub').innerText = t.lt.s1;
+            document.getElementById('lt-1-title').innerText = t.lt.t1;
+            document.getElementById('lt-1-desc').innerText = t.lt.d1;
+            document.getElementById('lt-1-btn').innerText = t.lt.b1;
+            
+            document.getElementById('lt-2-sub').innerText = t.lt.s2;
+            document.getElementById('lt-2-title').innerText = t.lt.t2;
+            document.getElementById('lt-2-desc').innerText = t.lt.d2;
+            document.getElementById('lt-2-btn').innerText = t.lt.b2;
+
+            // Gallery
+            document.getElementById('gal-title').innerText = t.gal.title;
+            document.getElementById('gal-sub').innerText = t.gal.sub;
+            document.getElementById('img-1-title').innerText = t.gal.i1;
+            document.getElementById('img-2-title').innerText = t.gal.i2;
+            document.getElementById('img-3-title').innerText = t.gal.i3;
+            document.getElementById('img-4-title').innerText = t.gal.i4;
+
+            // Owners
+            document.getElementById('own-tag').innerText = t.own.tag;
+            document.getElementById('own-title').innerHTML = t.own.title;
+            document.getElementById('own-desc').innerText = t.own.desc;
+            document.getElementById('o1').innerText = t.own.o1;
+            document.getElementById('o2').innerText = t.own.o2;
+            document.getElementById('o3').innerText = t.own.o3;
+            document.getElementById('own-btn').innerText = t.own.btn;
 
             // Services
-            document.getElementById('serv-title').innerText = t.serv.title;
-            document.getElementById('serv-subtitle').innerText = t.serv.sub;
-            document.getElementById('serv-m-title').innerText = t.serv.mt;
-            document.getElementById('serv-m-price').innerText = t.serv.mp;
-            document.getElementById('serv-m-desc').innerText = t.serv.md;
-            document.getElementById('serv-m-cta').innerText = t.serv.mc;
-            document.getElementById('serv-s-title').innerText = t.serv.st;
-            document.getElementById('serv-s-price').innerText = t.serv.sp;
-            document.getElementById('serv-s-desc').innerText = t.serv.sd;
-            document.getElementById('serv-s-cta').innerText = t.serv.sc;
+            document.getElementById('serv-tag').innerText = t.serv.tag;
+            document.getElementById('serv-title').innerHTML = t.serv.title;
+            document.getElementById('serv-desc').innerText = t.serv.desc;
+            document.getElementById('serv-1').innerText = t.serv.s1;
+            document.getElementById('serv-2').innerText = t.serv.s2;
+            document.getElementById('serv-3').innerText = t.serv.s3;
 
             // Contact
+            document.getElementById('con-tag').innerText = t.con.tag;
             document.getElementById('con-title').innerText = t.con.title;
-            document.getElementById('con-subtitle').innerText = t.con.sub;
-            document.getElementById('label-name').innerText = t.con.n;
-            document.getElementById('label-email').innerText = t.con.e;
-            document.getElementById('label-msg').innerText = t.con.m;
-            document.getElementById('btn-send').innerText = t.con.s;
+            document.getElementById('con-sub').innerText = t.con.sub;
+            document.getElementById('lbl-name').innerText = t.con.n;
+            document.getElementById('lbl-phone').innerText = t.con.p;
+            document.getElementById('lbl-type').innerText = t.con.t;
+            document.getElementById('lbl-msg').innerText = t.con.m;
+            document.getElementById('btn-send').innerText = t.con.btn;
             document.getElementById('txt-success').innerText = t.con.ok;
 
             // Footer
-            document.getElementById('footer-desc').innerText = t.foot.desc;
-            document.getElementById('footer-rights').innerText = t.foot.r;
-            document.getElementById('footer-template').innerText = t.foot.t;
+            document.getElementById('foot-desc').innerText = t.foot.desc;
+            document.getElementById('foot-l1').innerText = t.foot.l1;
+            document.getElementById('lnk-abt').innerText = t.foot.abt;
+            document.getElementById('lnk-own').innerText = t.foot.own;
+            document.getElementById('lnk-pr').innerText = t.foot.pr;
+            document.getElementById('foot-l2').innerText = t.foot.l2;
+            document.getElementById('lnk-priv').innerText = t.foot.priv;
+            document.getElementById('lnk-term').innerText = t.foot.term;
+            document.getElementById('lnk-ten').innerText = t.foot.ten;
+            document.getElementById('foot-news').innerText = t.foot.news;
+            document.getElementById('foot-copy').innerText = t.foot.copy;
 
-            // Language Btn classes
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('bg-slate-900', 'text-white');
-                btn.classList.add('text-slate-400');
+            // Update Active State
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.classList.remove('text-brand-gold');
+                b.classList.add('text-brand-stone'); 
             });
-            document.querySelector(`.lang-btn.${l}`).classList.add('bg-slate-900', 'text-white');
-            document.querySelector(`.lang-btn.${l}`).classList.remove('text-slate-400');
+            document.querySelector(`.lang-btn.${l}`).classList.add('text-brand-gold');
+            document.querySelector(`.lang-btn.${l}`).classList.remove('text-brand-stone');
         }
 
         function setView(v) {
-            currentView = v;
             document.getElementById('home-view').classList.toggle('hidden', v !== 'home');
             document.getElementById('contact-view').classList.toggle('hidden', v !== 'contact');
-            
-            document.getElementById('nav-home').classList.toggle('font-bold', v === 'home');
-            document.getElementById('nav-contact').classList.toggle('font-bold', v === 'contact');
             window.scrollTo(0, 0);
         }
 
@@ -313,27 +709,17 @@
             e.preventDefault();
             document.getElementById('contact-form').classList.add('hidden');
             document.getElementById('form-success').classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById('contact-form').classList.remove('hidden');
-                document.getElementById('form-success').classList.add('hidden');
-                document.getElementById('contact-form').reset();
-            }, 5000);
         }
 
-        // Chatwoot Load
-        (function(d,t) {
-            var BASE_URL="https://chatwoot.panel.aisaas.site";
-            var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=BASE_URL+"/packs/js/sdk.js";
-            g.defer = true; g.async = true;
-            g.onload=function(){
-                window.chatwootSDK.run({
-                    websiteToken: 'WSP9oqKuW18ALUno6fe41kc9',
-                    baseUrl: BASE_URL
-                })
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-0', 'shadow-lg');
+            } else {
+                nav.classList.remove('py-0', 'shadow-lg');
             }
-            s.parentNode.insertBefore(g,s);
-        })(document,"script");
+        });
     </script>
 </body>
 </html>
