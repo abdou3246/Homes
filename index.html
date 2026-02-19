@@ -427,38 +427,18 @@
                             </div>
                         </div>
                         
-                        <div class="bg-white p-10 shadow-2xl border border-brand-stone/10">
-                            <form id="contact-form" class="space-y-8" onsubmit="handleContact(event)">
-                                <div class="grid grid-cols-2 gap-6">
-                                    <div class="text-right rtl:text-right ltr:text-left">
-                                        <label class="block text-xs font-bold uppercase tracking-wider text-brand-stone mb-3" id="lbl-name">الاسم</label>
-                                        <input type="text" required class="w-full bg-brand-cream border-b border-brand-stone/30 px-0 py-2 outline-none focus:border-brand-gold transition-colors text-brand-dark">
-                                    </div>
-                                    <div class="text-right rtl:text-right ltr:text-left">
-                                        <label class="block text-xs font-bold uppercase tracking-wider text-brand-stone mb-3" id="lbl-phone">الهاتف</label>
-                                        <input type="tel" required class="w-full bg-brand-cream border-b border-brand-stone/30 px-0 py-2 outline-none focus:border-brand-gold transition-colors text-brand-dark">
-                                    </div>
-                                </div>
-                                <div class="text-right rtl:text-right ltr:text-left">
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-stone mb-3" id="lbl-type">نوع الطلب</label>
-                                    <select class="w-full bg-brand-cream border-b border-brand-stone/30 px-0 py-2 outline-none focus:border-brand-gold transition-colors text-brand-dark cursor-pointer text-right rtl:text-right ltr:text-left">
-                                        <option>حجز إقامة (Booking)</option>
-                                        <option>إدارة عقار (Management)</option>
-                                        <option>أخرى (Other)</option>
-                                    </select>
-                                </div>
-                                <div class="text-right rtl:text-right ltr:text-left">
-                                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-stone mb-3" id="lbl-msg">تفاصيل الطلب</label>
-                                    <textarea rows="3" class="w-full bg-brand-cream border-b border-brand-stone/30 px-0 py-2 outline-none focus:border-brand-gold transition-colors resize-none text-brand-dark"></textarea>
-                                </div>
-                                <button type="submit" class="w-full py-5 bg-brand-dark text-white font-latin-serif italic text-lg hover:bg-brand-gold hover:text-white transition-all duration-300" id="btn-send">
-                                    إرسال الطلب
-                                </button>
-                            </form>
-                            <div id="form-success" class="hidden text-center py-12">
-                                <span class="text-brand-gold text-4xl mb-4 block">✦</span>
-                                <p class="text-xl font-serif text-brand-dark" id="txt-success">شكراً. تم استلام طلبك وسنتواصل معك قريباً.</p>
-                            </div>
+    <!-- LEFT SIDE (texte + contact infos) -->
+    <div class="text-right rtl:text-right ltr:text-left">
+        ...
+    </div>
+
+    <!-- RIGHT SIDE (WIDGET remplace formulaire) -->
+    <div class="bg-white p-10 shadow-2xl border border-brand-stone/10">
+        <iframe
+            src="https://typebot-viewer.panel.gptize.vip/customer-on-boarding-ova1vcv"
+            class="w-full h-[650px] rounded-lg"
+            style="border:none;"
+        ></iframe>
                         </div>
                     </div>
                 </section>
